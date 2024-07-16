@@ -3,6 +3,7 @@ package com.cydeo.controller;
 import com.cydeo.dto.ResponseWrapper;
 import com.cydeo.dto.UserDTO;
 import com.cydeo.service.UserService;
+import jakarta.annotation.security.RolesAllowed;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -21,6 +22,7 @@ public class UserController {
 
 
     @GetMapping
+    @RolesAllowed({"Manager","Admin"})
     public ResponseEntity<ResponseWrapper>getAllUsers(){
         List<UserDTO> userList = userService.listAllUsers();
         return ResponseEntity.ok(new ResponseWrapper("Users are successfully retrieved", userList,HttpStatus.OK));
@@ -29,6 +31,7 @@ public class UserController {
 
 
     @GetMapping("/{username}")
+    @RolesAllowed("Admin")
     public ResponseEntity<ResponseWrapper> getUserByUsername(@PathVariable("username") String username){
         UserDTO currentUser = userService.findByUserName(username);
 
@@ -36,6 +39,7 @@ public class UserController {
     }
 
     @PostMapping
+    @RolesAllowed("Admin")
     public ResponseEntity<ResponseWrapper> createUser(@RequestBody UserDTO user){
 
         userService.save(user);
@@ -44,12 +48,14 @@ public class UserController {
 
 
     @PutMapping
+    @RolesAllowed("Admin")
     public ResponseEntity<ResponseWrapper> updateUser(@RequestBody UserDTO user){
         userService.update(user);
         return ResponseEntity.ok(new ResponseWrapper("User "+user.getUserName()+" is updated",HttpStatus.OK));
     }
 
     @DeleteMapping("/{username}")
+    @RolesAllowed("Admin")
     public ResponseEntity<ResponseWrapper> deleteUser (@PathVariable("username") String username){
 
         userService.delete(username);
