@@ -1,4 +1,4 @@
-package com.cydeo.dto.entity;
+package com.cydeo.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
