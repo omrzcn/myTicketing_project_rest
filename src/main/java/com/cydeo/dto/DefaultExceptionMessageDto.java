@@ -12,3 +12,4 @@ public class DefaultExceptionMessageDto {
 
     private String message;
 }
+// by this class , we'll be able to show our exception messages on ui.
